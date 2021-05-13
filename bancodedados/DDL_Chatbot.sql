@@ -88,9 +88,11 @@ ALTER TABLE Mensagens
 CREATE TABLE Bot_mensagens(
 id bigint(20),
 id_Mensagens bigint(20) UNSIGNED,
+id_Respostas bigint(20) UNSIGNED,
 criado_em timestamp DEFAULT CURRENT_TIMESTAMP,
 primary key (id),
-foreign key (id_Mensagens) references Mensagens(id)
+foreign key (id_Mensagens) references Mensagens(id),
+foreign key (id_Respostas) references Respostas(id)
 );
 
 ALTER TABLE Bot_mensagens
