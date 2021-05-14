@@ -5,6 +5,10 @@ module.exports = (app) => {
     Avaliacoes.getAll(res);
   });
 
+  app.get("/avaliacoes/:id", (req, res) => {
+    Avaliacoes.get(res);
+  });
+
   app.post("/avaliacoes", (req, res) => {
     const solicitacao = req.body;
     console.log(solicitacao);
