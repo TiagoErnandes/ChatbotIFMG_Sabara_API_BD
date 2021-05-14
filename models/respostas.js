@@ -5,8 +5,8 @@ class Respostas {
   create(palavra, res) {
     const criado_em = moment().format("YYYY-MM-DD HH:MM:DD");
     const atualizado_em = moment().format("YYYY-MM-DD HH:MM:DD");
-    const dadosCompletos = { ...palavra, criado_em, atualizado_em };    
-    const sql = "INSERT INTO respostas SET ?";
+    const dadosCompletos = { ...palavra, criado_em, atualizado_em };
+    const sql = "INSERT INTO Respostas SET ?";
 
     conexao.query(sql, dadosCompletos, (erro, resultado) => {
       if (erro) {
@@ -18,7 +18,7 @@ class Respostas {
   }
 
   getAll(res) {
-    const sql = "SELECT * FROM respostas";
+    const sql = "SELECT * FROM Respostas";
     conexao.query(sql, (erro, resultado) => {
       if (erro) {
         res.status(400).json(erro);
@@ -29,7 +29,7 @@ class Respostas {
   }
 
   delete(id, res) {
-    const sql = `DELETE FROM respostas WHERE id=${id}`;
+    const sql = `DELETE FROM Respostas WHERE id=${id}`;
 
     conexao.query(sql, (erro, resultado) => {
       if (erro) {
@@ -40,7 +40,7 @@ class Respostas {
     });
   }
   alter(id, palavra, res) {
-    const sql = "UPDATE respostas SET ? WHERE id=?";
+    const sql = "UPDATE Respostas SET ? WHERE id=?";
     conexao.query(sql, [palavra, id], (erro, resultado) => {
       if (erro) {
         res.status(400).json(erro);

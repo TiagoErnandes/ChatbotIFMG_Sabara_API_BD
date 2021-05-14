@@ -1,7 +1,7 @@
 const conexao = require("../bancodedados/conexao");
 
 function getAll(res) {
-  const sql = "SELECT * FROM arquivos;";
+  const sql = "SELECT * FROM Arquivos;";
   conexao.query(sql, (erro, resultado) => {
     if (erro) {
       res.status(400).json(erro);
@@ -12,7 +12,7 @@ function getAll(res) {
 }
 
 function add(nome, caminho, res) {
-  const sql = `INSERT INTO arquivos(nome, caminho, atualizado_em, criado_em, deletado_em) VALUES("${nome}","${caminho}",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP, NULL);`;
+  const sql = `INSERT INTO Arquivos(nome, caminho, atualizado_em, criado_em, deletado_em) VALUES("${nome}","${caminho}",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP, NULL);`;
   conexao.query(sql, (erro, resultado) => {
     if (erro) {
       res.status(400).json(erro);
@@ -23,7 +23,7 @@ function add(nome, caminho, res) {
 }
 
 function erase(id, res) {
-  const sql = `DELETE FROM arquivos WHERE id=${id}`;
+  const sql = `DELETE FROM Arquivos WHERE id=${id}`;
   conexao.query(sql, (erro, resultado) => {
     if (erro) {
       res.status(400).json(erro);
@@ -34,7 +34,7 @@ function erase(id, res) {
 }
 
 function edit(id, alt, res) {
-  const sql = `UPDATE arquivos SET nome='${alt}' WHERE id=${id}`;
+  const sql = `UPDATE Arquivos SET nome='${alt}' WHERE id=${id}`;
   conexao.query(sql, (erro, resultado) => {
     if (erro) {
       res.status(400).json(erro);
