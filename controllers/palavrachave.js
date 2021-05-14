@@ -4,6 +4,10 @@ module.exports = (app) => {
   app.get("/palavrachave", (req, res) => {
     Palavrachave.getAll(res);
   });
+  app.get("/palavrachave/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    Palavrachave.getOne(id, res);
+  });
 
   app.post("/palavrachave", (req, res) => {
     const palavra = req.body;
