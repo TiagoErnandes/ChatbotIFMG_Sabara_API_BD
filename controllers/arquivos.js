@@ -5,6 +5,11 @@ module.exports = (app) => {
     Arquivo.getAll(res);
   });
 
+  app.get("/arquivos/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    Arquivo.getOne(id, res);
+  });
+
   app.post("/arquivos", (req, res) => {
     let nome = req.body.nome;
     let caminho = req.body.caminho;
@@ -18,8 +23,9 @@ module.exports = (app) => {
 
   app.put("/arquivos/:id", (req, res) => {
     const id = parseInt(req.params.id);
-    let alt = req.body.alt;
-    Arquivo.edit(id, alt, res);
+    let nome = req.body.nome;
+    let caminho = req.body.caminho;
+    Arquivo.edit(id, nome,caminho, res);
   });
   
 };
