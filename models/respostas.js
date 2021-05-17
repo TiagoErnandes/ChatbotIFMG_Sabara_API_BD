@@ -1,54 +1,28 @@
-const moment = require("moment");
-const conexao = require("../bancodedados/conexao");
+const Respostas = require("../models/respostas");
 
-class Respostas {
-  create(palavra, res) {
-    const criado_em = moment().format("YYYY-MM-DD HH:MM:DD");
-    const atualizado_em = moment().format("YYYY-MM-DD HH:MM:DD");
-    const dadosCompletos = { ...palavra, criado_em, atualizado_em };
-    const sql = "INSERT INTO Respostas SET ?";
+module.exports = (app) => {
+  app.get("/respostas", (req, res) => {
+    Respostas.getAll(res);
+  });
+  
+  app.get("/respostas/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    Respostas.getOne(id, res);
+  });
 
-    conexao.query(sql, dadosCompletos, (erro, resultado) => {
-      if (erro) {
-        res.status(400).json(erro);
-      } else {
-        res.status(201).json(resultado);
-      }
-    });
-  }
+  app.post("/respostas", (req, res) => {
+    const palavra = req.body;
+    Respostas.create(palavra, res);
+  });
 
-  getAll(res) {
-    const sql = "SELECT * FROM Respostas";
-    conexao.query(sql, (erro, resultado) => {
-      if (erro) {
-        res.status(400).json(erro);
-      } else {
-        res.status(200).json(resultado);
-      }
-    });
-  }
+  app.delete("/respostas/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    Respostas.delete(id, res);
+  });
 
-  delete(id, res) {
-    const sql = `DELETE FROM Respostas WHERE id=${id}`;
-
-    conexao.query(sql, (erro, resultado) => {
-      if (erro) {
-        res.status(400).json(erro);
-      } else {
-        res.status(200).json(resultado);
-      }
-    });
-  }
-  alter(id, palavra, res) {
-    const sql = "UPDATE Respostas SET ? WHERE id=?";
-    conexao.query(sql, [palavra, id], (erro, resultado) => {
-      if (erro) {
-        res.status(400).json(erro);
-      } else {
-        res.status(200).json(resultado);
-      }
-    });
-  }
-}
-
-module.exports = new Respostas();
+  app.put("/respostas/:id", (req, res) => {
+    const palavra = req.body;
+    const id = parseInt(req.params.id);
+    Respostas.alter(id, palavra, res);
+  });
+};
