@@ -1,28 +1,66 @@
-const Respostas = require("../models/respostas");
+const moment = require("moment");
+const conexao = require("../bancodedados/conexao");
 
-module.exports = (app) => {
-  app.get("/respostas", (req, res) => {
-    Respostas.getAll(res);
-  });
+class Respostas {
+  create(palavra, res) {
+    const criado_em = moment().format("YYYY-MM-DD HH:MM:DD");
+    const atualizado_em = moment().format("YYYY-MM-DD HH:MM:DD");
+    const dadosCompletos = { ...palavra, criado_em, atualizado_em };    
+    const sql = "INSERT INTO respostas SET ?";
+
+    conexao.query(sql, dadosCompletos, (erro, resultado) => {
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(201).json(resultado);
+      }
+    });
+  }
+
+  getOne(id, res) {
+    const sql = `SELECT * FROM respostas WHERE id=${id}`;
+    conexao.query(sql, (erro, resultado) => {
+      const resultadoUm = resultado[0];
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(200).json(resultadoUm);
+      }
+    });
+  }
+
+  getAll(res) {
+    const sql = "SELECT * FROM respostas";
+    conexao.query(sql, (erro, resultado) => {
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(200).json(resultado);
+      }
+    });
+  }
+
+  delete(id, res) {
+    const sql = `DELETE FROM respostas WHERE id=${id}`;
+    conexao.query(sql, (erro, resultado) => {
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(200).json(resultado);
+      }
+    });
+  }
   
-  app.get("/respostas/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-    Respostas.getOne(id, res);
-  });
+  alter(id, palavra, res) {
+    const sql = "UPDATE respostas SET ? WHERE id=?";
+    conexao.query(sql, [palavra, id], (erro, resultado) => {
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(200).json(resultado);
+      }
+    });
+  }
+}
 
-  app.post("/respostas", (req, res) => {
-    const palavra = req.body;
-    Respostas.create(palavra, res);
-  });
-
-  app.delete("/respostas/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-    Respostas.delete(id, res);
-  });
-
-  app.put("/respostas/:id", (req, res) => {
-    const palavra = req.body;
-    const id = parseInt(req.params.id);
-    Respostas.alter(id, palavra, res);
-  });
-};
+module.exports = new Respostas();
