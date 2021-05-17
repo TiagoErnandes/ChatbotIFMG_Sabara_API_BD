@@ -5,6 +5,11 @@ module.exports = (app) => {
     Intencao.getAll(res);
   });
 
+  app.get("/intencoes/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    Intencao.getOne(id, res);
+  });
+
   app.post("/intencoes", (req, res) => {
     const palavra = req.body;
     console.log(palavra);
