@@ -10,10 +10,10 @@ module.exports = (app) => {
   });
 
   app.get("/historcoArquivo", (req, res) => {
-    Historico.getAllBotMessages(res);
+    Historico.getAllArquivosMessages(res);
   });
 
   app.get("/historcoRespostas", (req, res) => {
-    Historico.getAllBotMessages(res);
+    Historico.getAllRespostasMessages(res);
   });
 };
