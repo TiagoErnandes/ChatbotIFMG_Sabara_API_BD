@@ -19,9 +19,12 @@ module.exports = (app) => {
     const id = parseInt(req.params.id);
     Avaliacoes.delete(id, res);
   });
-  app.put("/avaliacoes/:id", (req, res) => {
-    const solicitacao = req.body;
+  app.put("/avaliacoesLido/:id", (req, res) => {
     const id = parseInt(req.params.id);
-    Avaliacoes.alter(id, solicitacao, res);
+    Avaliacoes.alterLido(id, res);
+  });
+  app.put("/avaliacoesTerminado/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    Avaliacoes.alterTerminado(id, res);
   });
 };
