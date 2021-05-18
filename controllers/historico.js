@@ -9,4 +9,11 @@ module.exports = (app) => {
     Historico.getAllBotMessages(res);
   });
 
+  app.get("/historcoArquivo", (req, res) => {
+    Historico.getAllBotMessages(res);
+  });
+
+  app.get("/historcoRespostas", (req, res) => {
+    Historico.getAllBotMessages(res);
+  });
 };
