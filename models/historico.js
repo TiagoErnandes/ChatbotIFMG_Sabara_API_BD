@@ -1,11 +1,10 @@
-
 const moment = require("moment");
 const conexao = require("../bancodedados/conexao");
 
 class Historico {
-
   getAllUserMessages(res) {
-    const sql = "SELECT * FROM Mensagens";
+    const sql =
+      "SELECT * FROM mensagens INNER JOIN arquivos ON mensagens.arquivo_id = arquivos.id";
     conexao.query(sql, (erro, resultado) => {
       if (erro) {
         res.status(400).json(erro);
@@ -16,7 +15,8 @@ class Historico {
   }
 
   getAllBotMessages(res) {
-    const sql = "SELECT * FROM Bot_mensagens";
+    const sql =
+      "SELECT * FROM bot_mensagens INNER JOIN mensagens ON bot_mensagens.id_Mensagens = mensagens.id INNER JOIN respostas ON bot_mensagens.id_Respostas = respostas.id";
     conexao.query(sql, (erro, resultado) => {
       if (erro) {
         res.status(400).json(erro);
@@ -25,30 +25,6 @@ class Historico {
       }
     });
   }
-
-
-  getAllArquivosMessages(res) {
-    const sql = "SELECT nome, ip, mensagens.criado_em as criacao, Arquivo_id as idArquivo, texto_Mensagens text FROM Mensagens INNER JOIN Arquivos ON Mensagens.Arquivo_id = Arquivos.id";
-    conexao.query(sql, (erro, resultado) => {
-      if (erro) {
-        res.status(400).json(erro);
-      } else {
-        res.status(200).json(resultado);
-      }
-    });
-  }
-
-  getAllRespostasMessages(res) {
-    const sql = "SELECT * FROM Respostas INNER JOIN Bot_mensagens ON Respostas.id = Bot_mensagens.id";
-    conexao.query(sql, (erro, resultado) => {
-      if (erro) {
-        res.status(400).json(erro);
-      } else {
-        res.status(200).json(resultado);
-      }
-    });
-  }
-
 }
 
 module.exports = new Historico();

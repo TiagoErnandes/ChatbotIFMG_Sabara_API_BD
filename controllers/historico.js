@@ -5,15 +5,7 @@ module.exports = (app) => {
     Historico.getAllUserMessages(res);
   });
 
-  app.get("/historcoBot", (req, res) => {
+  app.get("/historicoBot", (req, res) => {
     Historico.getAllBotMessages(res);
-  });
-
-  app.get("/historcoArquivo", (req, res) => {
-    Historico.getAllArquivosMessages(res);
-  });
-
-  app.get("/historcoRespostas", (req, res) => {
-    Historico.getAllRespostasMessages(res);
   });
 };
