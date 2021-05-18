@@ -19,6 +19,9 @@ module.exports = (app) => {
 
   app.post("/arquivos/upload", function (req, res) {
     console.log(req.files);
+    if (req.body.caminho) {
+      fs.unlinkSync("./public/" + req.body.caminho);
+    }
     if (req.files) {
       console.log(req.files.arquivo);
       var file = req.files.arquivo;

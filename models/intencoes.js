@@ -17,6 +17,17 @@ class Intencao {
     });
   }
 
+  getOne(id, res) {
+    const sql = `SELECT * FROM Intencao WHERE id=${id}`;
+    conexao.query(sql, (erro, resultado) => {
+      const resultadoUm = resultado[0];
+      if (erro) {
+        res.status(400).json(erro);
+      } else {
+        res.status(200).json(resultadoUm);
+      }
+    });
+  }
   getAll(res) {
     const sql = "SELECT * FROM Intencao";
     conexao.query(sql, (erro, resultado) => {
