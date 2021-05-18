@@ -1,121 +1,121 @@
-CREATE DATABASE Chatbot;
-USE Chatbot;
+CREATE DATABASE chatbot;
+USE chatbot;
 
 
-CREATE TABLE Admins(
+CREATE TABLE admins(
 id bigint(20),
 atualizado_em timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 criado_em timestamp DEFAULT CURRENT_TIMESTAMP,
-deletado_em timestamp DEFAULT NULL,
+deletado_em timestamp NULL DEFAULT NULL,
 nome varchar(191),
 numero_identificacao integer,
 senha varchar(191),
 primary key (id)
 );
 
-ALTER TABLE Admins
+ALTER TABLE admins
   MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE Intencao(
+CREATE TABLE intencao(
 id bigint(20),
 atualizado_em timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 criado_em timestamp DEFAULT CURRENT_TIMESTAMP,
-deletado_em timestamp DEFAULT NULL,
+deletado_em timestamp NULL DEFAULT NULL,
 nome varchar(191),
 primary key (id)
 );
 
-ALTER TABLE Intencao
+ALTER TABLE intencao
   MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE Palavras_Chave(
+CREATE TABLE palavras_chave(
 id bigint(20),
 atualizado_em timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 criado_em timestamp DEFAULT CURRENT_TIMESTAMP,
-deletado_em timestamp DEFAULT NULL,
+deletado_em timestamp NULL DEFAULT NULL,
 nome varchar(191),
 primary key (id)
 );
 
-ALTER TABLE Palavras_Chave
+ALTER TABLE palavras_chave
   MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
   
 
-CREATE TABLE Arquivos(
+CREATE TABLE arquivos(
 id bigint(20),
 nome varchar(191),
 caminho varchar(191),
 atualizado_em timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 criado_em timestamp DEFAULT CURRENT_TIMESTAMP,
-deletado_em timestamp DEFAULT NULL,
+deletado_em timestamp NULL DEFAULT NULL,
 primary key(id)
 );
 
-ALTER TABLE Arquivos
+ALTER TABLE arquivos
   MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
   
-CREATE TABLE Respostas(
+CREATE TABLE respostas(
 id bigint(20),
 atualizado_em timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 criado_em timestamp DEFAULT CURRENT_TIMESTAMP,
-deletado_em timestamp DEFAULT NULL,
+deletado_em timestamp NULL DEFAULT NULL,
 texto_respostas text(5000),
 id_intencao bigint(20) UNSIGNED,
 id_PalavrasChave bigint(20) UNSIGNED,
 Arquivo_id bigint(20) UNSIGNED,
-foreign key (Arquivo_id) references Arquivos(id),
-foreign key (id_intencao) references Intencao(id),
-foreign key (id_PalavrasChave) references Palavras_Chave(id),
+foreign key (Arquivo_id) references arquivos(id),
+foreign key (id_intencao) references intencao(id),
+foreign key (id_PalavrasChave) references palavras_chave(id),
 primary key (id)
 );
 
-ALTER TABLE Respostas
+ALTER TABLE respostas
   MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
   
-CREATE TABLE Mensagens(
+CREATE TABLE mensagens(
 id bigint(20),
 ip integer,
 criado_em timestamp DEFAULT CURRENT_TIMESTAMP,
 Arquivo_id bigint(20) UNSIGNED,
 texto_Mensagens text(5000),
 primary key(id),
-foreign key (Arquivo_id) references Arquivos(id)
+foreign key (Arquivo_id) references arquivos(id)
 );
 
-ALTER TABLE Mensagens
+ALTER TABLE mensagens
   MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
   
-CREATE TABLE Bot_mensagens(
+CREATE TABLE bot_mensagens(
 id bigint(20),
 id_Mensagens bigint(20) UNSIGNED,
 id_Respostas bigint(20) UNSIGNED,
 criado_em timestamp DEFAULT CURRENT_TIMESTAMP,
 primary key (id),
-foreign key (id_Mensagens) references Mensagens(id),
-foreign key (id_Respostas) references Respostas(id)
+foreign key (id_Mensagens) references mensagens(id),
+foreign key (id_Respostas) references respostas(id)
 );
 
-ALTER TABLE Bot_mensagens
+ALTER TABLE bot_mensagens
   MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
   
-CREATE TABLE Log(
+CREATE TABLE log(
 id_Admins bigint(20) UNSIGNED,
 id_Intencao bigint(20) UNSIGNED,
 id_PalavrasChave bigint(20) UNSIGNED,
-foreign key(id_Admins) references Admins(id),
-foreign key(id_Intencao) references Intencao(id),
-foreign key(id_PalavrasChave) references Palavras_Chave(id)
+foreign key(id_Admins) references admins(id),
+foreign key(id_Intencao) references intencao(id),
+foreign key(id_PalavrasChave) references palavras_chave(id)
 );
 
 
-CREATE TABLE Avaliacao(
+CREATE TABLE avaliacao(
 id bigint(20),
-Lido_em timestamp,
-Terminado_em timestamp,
+Lido_em timestamp NULL DEFAULT NULL,
+Terminado_em timestamp NULL DEFAULT NULL,
 id_Mensagens bigint(20) UNSIGNED,
-foreign key (id_Mensagens) references Mensagens(id),
+foreign key (id_Mensagens) references mensagens(id),
 primary key(id)
 );
 
-ALTER TABLE Avaliacao
+ALTER TABLE avaliacao
   MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
