@@ -6,7 +6,8 @@ module.exports = (app) => {
   });
 
   app.get("/avaliacoes/:id", (req, res) => {
-    Avaliacoes.get(res);
+    const id = parseInt(req.params.id);
+    Avaliacoes.get(id, res);
   });
 
   app.post("/avaliacoes", (req, res) => {

@@ -18,7 +18,7 @@ class Respostas {
   }
 
   getOne(id, res) {
-    const sql = `SELECT * FROM respostas WHERE id=${id}`;
+    const sql = `SELECT texto_respostas, respostas.criado_em, intencao.nome AS nomeIntencao, palavras_chave.nome AS nomePalavra, arquivos.caminho AS caminho FROM respostas INNER JOIN intencao ON respostas.id_intencao = intencao.id INNER JOIN palavras_chave ON respostas.id_PalavrasChave = palavras_chave.id INNER JOIN arquivos ON respostas.Arquivo_id = arquivos.id WHERE respostas.id=${id}`;
     conexao.query(sql, (erro, resultado) => {
       const resultadoUm = resultado[0];
       if (erro) {

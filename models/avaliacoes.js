@@ -16,9 +16,9 @@ class Avaliacoes {
   }
 
   get(id, res) {
-    const sql = `SELECT * FROM Avaliacao INNER JOIN Mensagens ON Avaliacao.id_Mensagens = Mensagens.id WHERE id=${id}`;
+    const sql = `SELECT *, avaliacao.id AS evalId FROM avaliacao INNER JOIN Mensagens ON avaliacao.id_Mensagens = Mensagens.id INNER JOIN Arquivos ON Mensagens.Arquivo_id = Arquivos.id WHERE avaliacao.id=${id}`;
     conexao.query(sql, (erro, resultado) => {
-      const resultadoUm = resultado[0];
+      const resultadoUm = resultado;
       if (erro) {
         res.status(400).json(erro);
       } else {
@@ -29,7 +29,7 @@ class Avaliacoes {
 
   getAll(res) {
     const sql =
-      "SELECT * FROM Avaliacao INNER JOIN Mensagens ON Avaliacao.id_Mensagens = Mensagens.id";
+      "SELECT *, avaliacao.id AS evalId FROM avaliacao INNER JOIN Mensagens ON avaliacao.id_Mensagens = Mensagens.id INNER JOIN Arquivos ON Mensagens.Arquivo_id = Arquivos.id";
     conexao.query(sql, (erro, resultado) => {
       if (erro) {
         res.status(400).json(erro);
